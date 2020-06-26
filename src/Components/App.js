@@ -40,25 +40,51 @@ export default class App extends Component {
       number: number,
     };
 
-    const atList = this.state.contacts.some(
+    const nameAtList = this.state.contacts.some(
       (contact) => contact.name.toLowerCase() === name.toLowerCase()
     );
 
-    atList
-      ? toast.info(`${name} is already in contacts!`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        })
-      : this.setState((prevState) => {
-          return {
-            contacts: [...prevState.contacts, contact],
-          };
-        });
+    const numberAtList = this.state.contacts.some(
+      (contact) => contact.number === number
+    );
+
+    if (nameAtList) {
+      toast.info(`${name} is already in contacts!`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else if (numberAtList) {
+      toast.info(`${number} is already in contacts!`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else if (!name || !number) {
+      toast.info("Please, fill out the form!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      this.setState((prevState) => {
+        return {
+          contacts: [...prevState.contacts, contact],
+        };
+      });
+    }
   };
 
   handlerFilter = (filter) => {
